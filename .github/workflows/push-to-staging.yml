@@ -85,7 +85,7 @@ jobs:
   deploy:
     environment:
       name: github-pages-staging
-      url: ${{ steps.deployment.outputs.page_url }}staging
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
     steps:
