@@ -5,18 +5,39 @@ on:
     branches:
       - main
 
+
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: creates output
+        run:  |
+              mkdir output   # some command from your repository that creates
+              rsync -a --exclude 'output' ./* output # output to "source-directory" ("output" in the example)
+      - name: Pushes to another repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          repository: HunterGerlach/nextjs-github-pages-multi-envs-prod
-          path: ./
-          token: ${{ secrets.REPO_TOKEN }}
+          source-directory: 'output'
+          destination-github-username: 'HunterGerlach'
+          destination-repository-name: 'nextjs-github-pages-multi-envs-prod'
+          user-email: hunter@huntergerlach.com
+          target-branch: main
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: root
-          path: ./
-          token: ${{ secrets.REPO_TOKEN }}
+# jobs:
+#   publish:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           repository: HunterGerlach/nextjs-github-pages-multi-envs-prod
+#           path: ./
+#           token: ${{ secrets.REPO_TOKEN }}
+
+#       - uses: actions/upload-artifact@v2
+#         with:
+#           name: root
+#           path: ./
+#           token: ${{ secrets.REPO_TOKEN }}
