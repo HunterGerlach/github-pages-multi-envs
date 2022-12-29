@@ -20,7 +20,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source-directory: 'output'
+          source-directory: './*'
           destination-github-username: 'HunterGerlach'
           destination-repository-name: 'nextjs-github-pages-multi-envs-prod'
           user-email: hunter@huntergerlach.com
